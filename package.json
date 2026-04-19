@@ -1,0 +1,35 @@
+{
+  "name": "career-arth-aws",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lambda:build": "esbuild aws/lambda/src/handlers/audit-lead.ts aws/lambda/src/handlers/consultation.ts --bundle --platform=node --target=node20 --format=cjs --outdir=dist/lambda",
+    "firebase:emulator": "firebase emulators:start"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.901.0",
+    "@aws-sdk/lib-dynamodb": "^3.901.0",
+    "clsx": "^2.1.1",
+    "next": "15.3.2",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.3",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
+  }
+}
