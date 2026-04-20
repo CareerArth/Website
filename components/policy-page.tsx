@@ -22,7 +22,7 @@ export function PolicyPage({
             {sections.map((section) => (
               <section key={section.title} className="bg-white border border-sand rounded-xl p-8">
                 <h2 className="text-xl font-serif text-charcoal mb-4">{section.title}</h2>
-                <p className="leading-relaxed">{section.body}</p>
+                <p className="leading-relaxed whitespace-pre-line">{section.body}</p>
               </section>
             ))}
           </Reveal>

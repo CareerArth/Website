@@ -1,5 +1,6 @@
 import { PrimaryCtaLink, SecondaryCtaLink } from '@/components/cta-links';
 import { Reveal } from '@/components/reveal';
+import { siteConfig } from '@/lib/site-config';
 
 export default function HomePage() {
   return (
@@ -22,7 +23,7 @@ export default function HomePage() {
                 assessment framework for ambitious professionals.
               </p>
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
-                <PrimaryCtaLink href="/audit">Start the Career Audit</PrimaryCtaLink>
+                <PrimaryCtaLink href={siteConfig.diagnosticFormUrl}>Start the Career Audit</PrimaryCtaLink>
                 <SecondaryCtaLink href="/sample-score">See Sample Score</SecondaryCtaLink>
               </div>
               <p className="text-xs text-slate opacity-70 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -163,7 +164,7 @@ export default function HomePage() {
                 Better career decisions start with <span className="italic text-slate">better diagnostics.</span>
               </h2>
               <div className="flex flex-col items-center space-y-6">
-                <PrimaryCtaLink href="/audit">Start the Career Audit</PrimaryCtaLink>
+                <PrimaryCtaLink href={siteConfig.diagnosticFormUrl}>Start the Career Audit</PrimaryCtaLink>
                 <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
                   <SecondaryCtaLink href="/sample-score">See Sample Score</SecondaryCtaLink>
                   <SecondaryCtaLink href="/consultation">Talk to a Career Expert</SecondaryCtaLink>

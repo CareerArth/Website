@@ -1,6 +1,7 @@
-import { AuditForm } from '@/components/forms/audit-form';
+import { PrimaryCtaLink } from '@/components/cta-links';
 import { PageHero } from '@/components/page-hero';
 import { Reveal } from '@/components/reveal';
+import { siteConfig } from '@/lib/site-config';
 
 export default function AuditPage() {
   return (
@@ -41,7 +42,21 @@ export default function AuditPage() {
         </Reveal>
 
         <Reveal className="delay-100 bg-white p-8 lg:p-12 rounded-xl shadow-sm border border-sand">
-          <AuditForm />
+          <div className="space-y-6">
+            <div>
+              <h2 className="font-serif text-2xl text-forest mb-3">Open the Career Arth Diagnostic</h2>
+              <p className="text-sm text-slate leading-relaxed">
+                The final diagnostic now runs through the live Google Form. Use the button below to open it in a new
+                tab and submit your responses directly.
+              </p>
+            </div>
+            <div className="bg-ivory border border-sand rounded-xl p-6 space-y-3 text-sm text-slate">
+              <p>Brand: Career Arth</p>
+              <p>Contact: {siteConfig.contactEmail}</p>
+              <p>Consultation requests are handled manually after your diagnostic is submitted.</p>
+            </div>
+            <PrimaryCtaLink href={siteConfig.diagnosticFormUrl}>Start the Career Audit</PrimaryCtaLink>
+          </div>
         </Reveal>
       </div>
     </main>

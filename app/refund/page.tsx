@@ -6,7 +6,7 @@ export default function RefundPage() {
     <PolicyPage
       eyebrow="Legal"
       title="Refund, Cancellation and Rescheduling Policy"
-      description="This route is wired for production. Replace the placeholder sections with the final approved policy before launch."
+      description="The policy governing cancellations, rescheduling, duplicate charges, and approved refunds."
       sections={refundSections}
     />
   );

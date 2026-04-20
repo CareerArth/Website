@@ -6,7 +6,7 @@ export default function PrivacyPage() {
     <PolicyPage
       eyebrow="Legal"
       title="Privacy Policy"
-      description="The current approved privacy copy from the static website has been preserved here."
+      description="How Career Arth collects, uses, stores, and protects your personal data."
       sections={privacySections}
     />
   );

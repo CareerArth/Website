@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { siteConfig } from '@/lib/site-config';
 import { navigationLinks } from '@/lib/site-content';
 import { cn } from '@/lib/utils';
 
@@ -33,12 +34,14 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/audit"
+          <a
+            href={siteConfig.diagnosticFormUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-5 py-2.5 bg-forest text-ivory rounded hover:bg-slate transition-colors btn-primary"
           >
             Start the Career Audit
-          </Link>
+          </a>
         </div>
         <button
           type="button"
@@ -60,13 +63,15 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/audit"
+            <a
+              href={siteConfig.diagnosticFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
               className="px-5 py-3 bg-forest text-ivory rounded text-center btn-primary"
             >
               Start the Career Audit
-            </Link>
+            </a>
           </div>
         </div>
       ) : null}

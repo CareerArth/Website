@@ -1,71 +1,147 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import { FormMessage } from '@/components/forms/form-message';
-import { apiUrl } from '@/lib/utils';
+import { FormEvent, useMemo, useState } from 'react';
+import { siteConfig } from '@/lib/site-config';
+
+type Status = 'idle' | 'loading' | 'success' | 'error';
+
+type FormValues = {
+  name: string;
+  email: string;
+  linkedin: string;
+  phone: string;
+};
+
+const initialValues: FormValues = {
+  name: '',
+  email: '',
+  linkedin: '',
+  phone: '',
+};
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^[+]?[0-9\s\-()]{7,20}$/;
+
+function normalizeLinkedin(value: string) {
+  if (!value) {
+    return '';
+  }
+
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
 
 export function ConsultationForm() {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [values, setValues] = useState<FormValues>(initialValues);
+  const [status, setStatus] = useState<Status>('idle');
+  const [message, setMessage] = useState('');
+
+  const endpointConfigured = useMemo(() => Boolean(siteConfig.consultationEndpoint), []);
+
+  function updateField(field: keyof FormValues, value: string) {
+    setValues((current) => ({ ...current, [field]: value }));
+  }
+
+  function validate() {
+    const name = values.name.trim();
+    const email = values.email.trim().toLowerCase();
+    const linkedin = normalizeLinkedin(values.linkedin.trim());
+    const phone = values.phone.trim();
+
+    if (!name) {
+      return { ok: false as const, message: 'Enter your name.' };
+    }
+
+    if (!emailPattern.test(email)) {
+      return { ok: false as const, message: 'Enter a valid email address.' };
+    }
+
+    if (linkedin && !/^https?:\/\/.+/i.test(linkedin)) {
+      return { ok: false as const, message: 'Enter a valid LinkedIn URL.' };
+    }
+
+    if (phone && !phonePattern.test(phone)) {
+      return { ok: false as const, message: 'Enter a valid phone number or leave it blank.' };
+    }
+
+    return {
+      ok: true as const,
+      payload: {
+        name,
+        email,
+        linkedin,
+        phone,
+        source: 'careerarth_website',
+      },
+    };
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    const email = String(formData.get('email') || '').trim();
-
-    if (!emailPattern.test(email)) {
-      setError('Enter a valid email address.');
+    if (!endpointConfigured) {
+      setStatus('error');
+      setMessage('Consultation form endpoint is not configured yet.');
       return;
     }
 
-    setIsSubmitting(true);
+    const validation = validate();
+    if (!validation.ok) {
+      setStatus('error');
+      setMessage(validation.message);
+      return;
+    }
+
+    setStatus('loading');
+    setMessage('');
 
     try {
-      const response = await fetch(apiUrl('/api/consultation'), {
+      const response = await fetch(siteConfig.consultationEndpoint, {
         method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        cache: 'no-store',
         headers: {
-          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Content-Type': 'text/plain;charset=utf-8',
         },
-        body: JSON.stringify({
-          name: formData.get('name'),
-          email,
-          roleCompany: formData.get('roleCompany'),
-          yearsExperience: formData.get('yearsExperience'),
-          helpRequest: formData.get('helpRequest'),
-          honeypot: formData.get('companyWebsite'),
-          captchaToken:
-            process.env.NEXT_PUBLIC_CAPTCHA_PLACEHOLDER_TOKEN || formData.get('captchaToken') || '',
-        }),
+        body: JSON.stringify(validation.payload),
       });
 
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(payload?.error || 'Could not submit the consultation request.');
+      const result = (await response.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || 'Could not submit your consultation request.');
       }
 
-      router.push('/thank-you?source=consultation');
-    } catch (submissionError) {
-      setError(submissionError instanceof Error ? submissionError.message : 'Submission failed.');
-    } finally {
-      setIsSubmitting(false);
+      setStatus('success');
+      setMessage('Consultation request received. Redirecting...');
+      setValues(initialValues);
+
+      window.setTimeout(() => {
+        router.push('/thank-you?source=consultation');
+      }, 900);
+    } catch (error) {
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Could not submit your consultation request.');
     }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      <input type="text" name="companyWebsite" tabIndex={-1} autoComplete="off" className="hidden" />
-      <input type="hidden" name="captchaToken" value="" readOnly />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-semibold text-slate uppercase mb-2">Name</label>
-          <input name="name" type="text" required className="input-field" />
+          <input
+            name="name"
+            type="text"
+            required
+            value={values.name}
+            onChange={(event) => updateField('name', event.target.value)}
+            className="input-field"
+            autoComplete="name"
+          />
         </div>
         <div>
           <label className="block text-xs font-semibold text-slate uppercase mb-2">Email</label>
@@ -73,38 +149,51 @@ export function ConsultationForm() {
             name="email"
             type="email"
             required
-            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-            title="Enter a valid email address"
+            value={values.email}
+            onChange={(event) => updateField('email', event.target.value)}
             className="input-field"
+            autoComplete="email"
           />
         </div>
       </div>
       <div>
-        <label className="block text-xs font-semibold text-slate uppercase mb-2">Role / Company</label>
-        <input name="roleCompany" type="text" required className="input-field" />
-      </div>
-      <div>
-        <label className="block text-xs font-semibold text-slate uppercase mb-2">Years of experience</label>
-        <input name="yearsExperience" type="number" min="0" max="60" required className="input-field" />
-      </div>
-      <div>
-        <label className="block text-xs font-semibold text-slate uppercase mb-2">
-          What would you like help with?
-        </label>
-        <textarea
-          name="helpRequest"
-          rows={4}
+        <label className="block text-xs font-semibold text-slate uppercase mb-2">LinkedIn</label>
+        <input
+          name="linkedin"
+          type="url"
+          value={values.linkedin}
+          onChange={(event) => updateField('linkedin', event.target.value)}
           className="input-field"
-          placeholder="Describe your current career inflection point..."
+          placeholder="https://linkedin.com/in/your-profile"
+          autoComplete="url"
         />
       </div>
-      <FormMessage type="error" message={error} />
+      <div>
+        <label className="block text-xs font-semibold text-slate uppercase mb-2">Phone Number</label>
+        <input
+          name="phone"
+          type="tel"
+          value={values.phone}
+          onChange={(event) => updateField('phone', event.target.value)}
+          className="input-field"
+          autoComplete="tel"
+        />
+      </div>
+      {message ? (
+        <p className={status === 'error' ? 'text-sm text-red-700' : 'text-sm text-forest'}>{message}</p>
+      ) : null}
+      {status === 'error' ? (
+        <p className="text-xs text-slate">
+          If this keeps failing, confirm the Apps Script uses the `/exec` deployment URL, is shared as
+          `Anyone`, and the sheet is accessible to the account running the script.
+        </p>
+      ) : null}
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={status === 'loading'}
         className="w-full py-4 bg-forest text-ivory font-medium rounded btn-primary tracking-wide disabled:opacity-70"
       >
-        {isSubmitting ? 'Submitting...' : 'Request Consultation'}
+        {status === 'loading' ? 'Submitting...' : 'Request Consultation'}
       </button>
     </form>
   );

@@ -6,7 +6,7 @@ export default function TermsPage() {
     <PolicyPage
       eyebrow="Legal"
       title="Terms & Conditions"
-      description="This route is wired for production. Replace the placeholder sections with the final approved legal copy before launch."
+      description="The terms governing access to the Career Arth website, services, content, and consultations."
       sections={termsSections}
     />
   );

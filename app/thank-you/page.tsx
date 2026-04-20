@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PrimaryCtaLink, SecondaryCtaLink } from '@/components/cta-links';
 import { Reveal } from '@/components/reveal';
+import { siteConfig } from '@/lib/site-config';
 
 export default async function ThankYouPage({
   searchParams,
@@ -8,7 +9,7 @@ export default async function ThankYouPage({
   searchParams?: Promise<{ source?: string }>;
 }) {
   const params = (await searchParams) || {};
-  const source = params.source === 'consultation' ? 'consultation request' : 'audit request';
+  const source = params.source === 'consultation' ? 'consultation inquiry' : 'diagnostic submission';
 
   return (
     <main className="min-h-[70vh] flex items-center pt-32 pb-20 lg:pt-40">
@@ -18,19 +19,19 @@ export default async function ThankYouPage({
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold mb-4">Submission received</p>
             <h1 className="font-serif text-4xl lg:text-5xl text-forest mb-6">Thank you.</h1>
             <p className="text-slate leading-relaxed max-w-2xl mx-auto mb-10">
-              We received your {source}. The system is configured to store the record in DynamoDB and send the
-              confirmation workflow through SES once the AWS environment variables are set.
+              We received your {source}. Diagnostic responses are collected through the live Google Form, and
+              consultation requests are handled manually by the Career Arth team.
             </p>
             <div className="flex flex-col items-center gap-6">
               <PrimaryCtaLink href="/sample-score">See Sample Score</PrimaryCtaLink>
               <div className="flex flex-col sm:flex-row items-center gap-6">
                 <SecondaryCtaLink href="/consultation">Talk to a Career Expert</SecondaryCtaLink>
-                <Link
-                  href="/contact"
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
                   className="text-sm font-medium text-slate hover:text-forest border-b border-slate hover:border-forest pb-0.5 transition-colors"
                 >
-                  Contact Career Arth
-                </Link>
+                  Email Career Arth
+                </a>
               </div>
             </div>
           </div>

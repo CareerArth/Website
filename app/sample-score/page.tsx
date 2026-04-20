@@ -1,6 +1,7 @@
 import { PrimaryCtaLink } from '@/components/cta-links';
 import { PageHero } from '@/components/page-hero';
 import { Reveal } from '@/components/reveal';
+import { siteConfig } from '@/lib/site-config';
 
 export default function SampleScorePage() {
   return (
@@ -62,7 +63,7 @@ export default function SampleScorePage() {
       <Reveal className="text-center space-y-8 delay-200">
         <h4 className="font-serif text-3xl text-forest">Ready for your real diagnostic?</h4>
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-          <PrimaryCtaLink href="/audit">Start the Career Audit</PrimaryCtaLink>
+          <PrimaryCtaLink href={siteConfig.diagnosticFormUrl}>Start the Career Audit</PrimaryCtaLink>
           <PrimaryCtaLink href="/consultation">Talk to a Career Expert</PrimaryCtaLink>
         </div>
       </Reveal>
