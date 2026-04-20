@@ -161,6 +161,14 @@ Firebase App Hosting notes:
 - The backend APIs stay on AWS unless you intentionally migrate them.
 - `NEXT_PUBLIC_API_BASE_URL` must point at your deployed AWS API Gateway base URL.
 
+## Deploy fix note
+
+- Upgraded `next` from `15.3.2` to `15.5.3`
+- Upgraded `react` and `react-dom` to `19.1.1`
+- Updated React type packages to current compatible 19.1 releases
+- Removed invalid placeholder env values from `apphosting.yaml` so Firebase App Hosting does not inherit broken deploy-time values
+- Environment values such as `NEXT_PUBLIC_API_BASE_URL` should now be set in Firebase App Hosting configuration instead of committed placeholder values
+
 ## Security controls included
 
 - secure headers in `next.config.mjs`

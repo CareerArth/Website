@@ -4,20 +4,3 @@ runConfig:
   minInstances: 0
   maxInstances: 2
   concurrency: 80
-
-env:
-  - variable: NEXT_PUBLIC_SITE_URL
-    value: https://YOUR_FIREBASE_APP_HOSTING_DOMAIN
-    availability:
-      - BUILD
-      - RUNTIME
-  - variable: NEXT_PUBLIC_API_BASE_URL
-    value: https://YOUR_API_ID.execute-api.YOUR_AWS_REGION.amazonaws.com
-    availability:
-      - BUILD
-      - RUNTIME
-  - variable: NEXT_PUBLIC_CAPTCHA_PLACEHOLDER_TOKEN
-    value: REPLACE_WITH_CLIENT_CAPTCHA_TOKEN
-    availability:
-      - BUILD
-      - RUNTIME
