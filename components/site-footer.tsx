@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="flex flex-col md:flex-row justify-between items-center md:items-start mb-12 gap-8">
           <div className="text-center md:text-left">
             <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logofooter-trimmed.png`}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logofooter.png`}
               alt="CareerArth"
               width={409}
               height={469}

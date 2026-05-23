@@ -20,14 +20,14 @@ export function SiteHeader() {
   return (
     <nav
       className={cn(
-        'fixed w-full z-50 transition-all duration-300 bg-graphite backdrop-blur-md border-b',
-        isScrolled ? 'shadow-sm border-sand' : 'border-transparent',
+        'fixed w-full z-50 transition-all duration-300 bg-ivory/85 backdrop-blur-lg border-b',
+        isScrolled ? 'shadow-[0_8px_30px_rgba(43,57,48,0.08)] border-sand' : 'border-transparent',
       )}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo-trimmed.png`}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/logo.png`}
             alt="CareerArth"
             width={1924}
             height={468}
@@ -35,9 +35,9 @@ export function SiteHeader() {
             priority
           />
         </Link>
-        <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-pearl font-work-sans">
+        <div className="hidden md:flex items-center gap-2 rounded-full border border-sand/80 bg-white/80 px-2 py-2 text-sm font-medium text-slate font-work-sans">
           {navigationLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="hover:text-gold transition-colors">
+            <Link key={link.href} href={link.href} className="px-3 py-1.5 rounded-full hover:text-forest hover:bg-ivory transition-colors">
               {link.label}
             </Link>
           ))}
@@ -45,9 +45,9 @@ export function SiteHeader() {
             href="https://forms.gle/XujesuyJ23NeHufK6"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-2.5 bg-gold text-charcoal font-semibold rounded hover:bg-gold/80 transition-colors btn-primary"
+            className="px-5 py-2.5 bg-forest text-ivory font-semibold rounded-full hover:bg-slate transition-colors btn-primary"
           >
-            Start the Career Audit
+            Get My Free Career Diagnostic
           </Link>
         </div>
         <button
@@ -63,8 +63,8 @@ export function SiteHeader() {
         </button>
       </div>
       {isOpen ? (
-        <div className="md:hidden border-t border-sand/20 bg-graphite/95 backdrop-blur-md">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-pearl font-work-sans">
+        <div className="md:hidden border-t border-sand bg-ivory/95 backdrop-blur-md">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-4 text-sm font-medium text-slate font-work-sans">
             {navigationLinks.map((link) => (
               <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)}>
                 {link.label}
@@ -75,9 +75,9 @@ export function SiteHeader() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsOpen(false)}
-              className="px-5 py-3 bg-gold text-charcoal font-semibold rounded text-center btn-primary"
+              className="px-5 py-3 bg-forest text-ivory font-semibold rounded text-center btn-primary"
             >
-              Start the Career Audit
+              Get My Free Career Diagnostic
             </Link>
           </div>
         </div>
