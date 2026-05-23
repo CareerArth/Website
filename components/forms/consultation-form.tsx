@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { FormMessage } from '@/components/forms/form-message';
+import { trackEvent } from '@/lib/analytics';
 import { apiUrl } from '@/lib/utils';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,6 +51,9 @@ export function ConsultationForm() {
         throw new Error(payload?.error || 'Could not submit the consultation request.');
       }
 
+      trackEvent('consultation_form_submit_success', {
+        source: 'consultation_form',
+      });
       router.push('/thank-you?source=consultation');
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Submission failed.');

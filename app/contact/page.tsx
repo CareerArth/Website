@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { PageHero } from '@/components/page-hero';
 import { Reveal } from '@/components/reveal';
+import { TrackedConsultationLink } from '@/components/tracked-consultation-link';
 import { contactInfo } from '@/lib/site-content';
 
 export default function ContactPage() {
@@ -47,12 +48,13 @@ export default function ContactPage() {
           </Reveal>
         </div>
         <div className="max-w-5xl mx-auto px-6 lg:px-12 mt-12">
-          <Link
+          <TrackedConsultationLink
             href="/consultation"
             className="text-sm font-medium text-slate hover:text-forest border-b border-slate hover:border-forest pb-0.5 transition-colors"
+            ctaType="contact_page"
           >
             Talk to a Career Expert
-          </Link>
+          </TrackedConsultationLink>
         </div>
       </section>
     </main>

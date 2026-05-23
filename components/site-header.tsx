@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import { navigationLinks } from '@/lib/site-content';
 import { cn } from '@/lib/utils';
 
@@ -45,6 +46,7 @@ export function SiteHeader() {
             href="https://forms.gle/XujesuyJ23NeHufK6"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackEvent('start_career_audit_click', { href: 'https://forms.gle/XujesuyJ23NeHufK6', cta_type: 'header' })}
             className="px-5 py-2.5 bg-forest text-ivory font-semibold rounded-full hover:bg-slate transition-colors btn-primary"
           >
             Get My Free Career Diagnostic
@@ -74,7 +76,10 @@ export function SiteHeader() {
               href="https://forms.gle/XujesuyJ23NeHufK6"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                trackEvent('start_career_audit_click', { href: 'https://forms.gle/XujesuyJ23NeHufK6', cta_type: 'header_mobile' });
+              }}
               className="px-5 py-3 bg-forest text-ivory font-semibold rounded text-center btn-primary"
             >
               Get My Free Career Diagnostic
