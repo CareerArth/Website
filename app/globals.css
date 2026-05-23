@@ -119,6 +119,18 @@ main > section + section {
   color: #ecf0eb;
 }
 
+.cta-dark-shell .btn-primary {
+  background: #f4f8f1;
+  color: #1f332a;
+  border: 1px solid rgba(244, 248, 241, 0.9);
+  box-shadow: 0 14px 30px -14px rgba(8, 18, 14, 0.75);
+}
+
+.cta-dark-shell .btn-primary:hover {
+  background: #ffffff;
+  color: #1b2d25;
+}
+
 .faq-shell {
   background: linear-gradient(180deg, #f4f9f4 0%, #eef5ee 100%);
   border: 1px solid rgba(125, 154, 104, 0.16);

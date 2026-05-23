@@ -32,7 +32,7 @@ export function SiteHeader() {
             alt="CareerArth"
             width={1924}
             height={468}
-            className="h-9 w-auto object-contain"
+            className="h-10 md:h-11 w-auto object-contain"
             priority
           />
         </Link>

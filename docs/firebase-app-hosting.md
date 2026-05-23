@@ -26,12 +26,13 @@ Official references:
 4. In Firebase Console, create an App Hosting backend for this repo.
 5. Point the backend to the repository root.
 6. Add the values from `apphosting.yaml` in the backend config if you prefer managing them in Console instead of source.
-7. Set `NEXT_PUBLIC_API_BASE_URL` to the live AWS API Gateway base URL.
-8. Set the live branch and trigger the first rollout.
+7. Set `NEXT_PUBLIC_API_BASE_URL` to the live AWS API Gateway base URL (used by audit flow).
+8. Set `CONSULTATION_WEBHOOK_URL` to your deployed Google Apps Script `/exec` URL.
+9. Set the live branch and trigger the first rollout.
 
 ## Notes
 
 - The Next.js frontend deploys on Firebase App Hosting.
-- The form APIs remain on AWS API Gateway and Lambda.
-- `NEXT_PUBLIC_API_BASE_URL` must stay configured, otherwise the forms will post to same-origin `/api/*`, which this Firebase frontend does not implement locally.
-- If you later migrate the API to Firebase Functions or Cloud Run, update `NEXT_PUBLIC_API_BASE_URL` accordingly.
+- The audit form API remains on AWS API Gateway and Lambda.
+- Consultation form uses same-origin `/api/consultation` (Next.js route handler) and forwards server-side to `CONSULTATION_WEBHOOK_URL`.
+- Keep `NEXT_PUBLIC_API_BASE_URL` configured for audit requests.

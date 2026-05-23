@@ -42,6 +42,7 @@ Backend via API Gateway + Lambda:
 - `CAPTCHA_SECRET_KEY`
 - `CAPTCHA_PLACEHOLDER_TOKEN`
 - `NEXT_PUBLIC_CAPTCHA_PLACEHOLDER_TOKEN`
+- `CONSULTATION_WEBHOOK_URL`
 - `NEXT_PUBLIC_SITE_URL` in `apphosting.yaml`
 - `NEXT_PUBLIC_API_BASE_URL` in `apphosting.yaml`
 - Terms and refund legal copy in `lib/site-content.ts`
@@ -128,8 +129,9 @@ Backend via API Gateway + Lambda:
 3. Set the app type to Next.js SSR / Web Compute.
 4. Add environment variables in Amplify:
    - `NEXT_PUBLIC_SITE_URL`
-   - `NEXT_PUBLIC_API_BASE_URL`
-   - `NEXT_PUBLIC_CAPTCHA_PLACEHOLDER_TOKEN`
+- `NEXT_PUBLIC_API_BASE_URL`
+- `NEXT_PUBLIC_CAPTCHA_PLACEHOLDER_TOKEN`
+- `CONSULTATION_WEBHOOK_URL`
 5. Trigger a build and deploy.
 6. Review `docs/aws/amplify-deployment.md`.
 

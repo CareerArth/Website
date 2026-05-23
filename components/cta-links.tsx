@@ -42,9 +42,11 @@ export function PrimaryCtaLink({
 export function SecondaryCtaLink({
   href,
   children,
+  className,
 }: {
   href: string;
   children: ReactNode;
+  className?: string;
 }) {
   const eventName = getCtaEventName(href);
 
@@ -54,7 +56,7 @@ export function SecondaryCtaLink({
       onClick={() => {
         if (eventName) trackEvent(eventName, { href, cta_type: 'secondary' });
       }}
-      className="text-sm font-medium text-slate hover:text-forest border-b border-slate hover:border-forest pb-0.5 transition-colors"
+      className={`text-sm font-medium text-slate hover:text-forest border-b border-slate hover:border-forest pb-0.5 transition-colors ${className ?? ''}`}
     >
       {children}
     </Link>

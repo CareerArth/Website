@@ -223,8 +223,18 @@ export default function HomePage() {
                   Get My Free Career Diagnostic
                 </PrimaryCtaLink>
                 <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-8">
-                  <SecondaryCtaLink href="/sample-score">Preview Sample Diagnostic Report</SecondaryCtaLink>
-                  <SecondaryCtaLink href="/consultation">Request Strategic Consultation</SecondaryCtaLink>
+                  <SecondaryCtaLink
+                    href="/sample-score"
+                    className="!text-ivory !border-ivory/80 hover:!text-white hover:!border-white bg-white/5 px-2 py-1 rounded-sm"
+                  >
+                    Preview Sample Diagnostic Report
+                  </SecondaryCtaLink>
+                  <SecondaryCtaLink
+                    href="/consultation"
+                    className="!text-ivory !border-ivory/80 hover:!text-white hover:!border-white bg-white/5 px-2 py-1 rounded-sm"
+                  >
+                    Request Strategic Consultation
+                  </SecondaryCtaLink>
                 </div>
               </div>
             </div>

@@ -14,10 +14,10 @@ export const footerLinks = [
 export const contactInfo = {
   primaryEmail: 'contact@careerarth.com',
   privacyEmail: 'privacy@careerarth.com',
-  socialPlaceholders: [
-    'LinkedIn: PLACEHOLDER_LINKEDIN_URL',
-    'Instagram: PLACEHOLDER_INSTAGRAM_URL',
-    'X / Twitter: PLACEHOLDER_X_URL',
+  socialLinks: [
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/company/careerarth' },
+    { label: 'Instagram', href: 'https://www.instagram.com/careerarth' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@CareerArth' },
   ],
 };
 
