@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://careerarth.com/schemas/careerarth-ai/profile.schema.json",
+  "title": "CareerArth AI — Structured User Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "fullName",
+    "email",
+    "currentRole",
+    "yearsExperience",
+    "yearsInCurrentRole",
+    "industry",
+    "skills",
+    "goals",
+    "questionnaire",
+    "consent",
+    "isSynthetic"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1, "description": "Stable profile id, e.g. p1-plateaued" },
+    "fullName": { "type": "string", "minLength": 1 },
+    "email": { "type": "string", "format": "email" },
+    "currentRole": { "type": "string", "minLength": 1 },
+    "yearsExperience": { "type": "integer", "minimum": 0, "maximum": 60 },
+    "yearsInCurrentRole": { "type": "number", "minimum": 0, "maximum": 60 },
+    "industry": { "type": "string", "minLength": 1 },
+    "careerStage": { "enum": ["early", "establishing", "mid", "senior"] },
+    "geography": { "type": "string" },
+    "linkedInUrl": { "type": "string", "format": "uri" },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level", "field"],
+        "properties": {
+          "level": { "enum": ["secondary", "diploma", "bachelors", "masters", "doctorate", "certification"] },
+          "field": { "type": "string" },
+          "year": { "type": "integer", "minimum": 1950, "maximum": 2100 }
+        }
+      }
+    },
+    "workHistory": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "industry", "startYear"],
+        "properties": {
+          "title": { "type": "string" },
+          "employer": { "type": "string", "description": "Optional; not required for scoring" },
+          "industry": { "type": "string" },
+          "startYear": { "type": "integer", "minimum": 1950, "maximum": 2100 },
+          "endYear": { "type": "integer", "minimum": 1950, "maximum": 2100 },
+          "levelChange": {
+            "enum": ["promotion", "lateral", "step-down", "new-domain"],
+            "description": "Relative to the preceding entry; used for the T_PROMOTIONS modifier"
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "kind"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "enum": ["technical", "domain", "leadership"] },
+          "lastUsedYear": { "type": "integer", "minimum": 1950, "maximum": 2100 }
+        }
+      }
+    },
+    "goals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["horizonYears"],
+      "properties": {
+        "targetRole": { "type": "string" },
+        "targetIndustry": { "type": "string" },
+        "horizonYears": { "type": "integer", "minimum": 1, "maximum": 30 },
+        "narrative": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "e.g. 'cannot relocate', 'needs remote work', 'visa-dependent'"
+    },
+    "concern": { "type": "string", "maxLength": 2000, "description": "Free text; same field as the live audit form" },
+    "concernCategory": {
+      "enum": ["stagnation", "misalignment", "industry-shift", "layoff-risk", "growth", "transition", "other"]
+    },
+    "questionnaire": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "A1", "A2", "A3", "A4", "A5",
+        "R1", "R2", "R3", "R4", "R5",
+        "T1", "T2", "T3", "T4", "T5",
+        "H1", "H2", "H3", "H4", "H5"
+      ],
+      "patternProperties": {
+        "^[ARTH][1-5]$": { "type": "integer", "minimum": 0, "maximum": 4 }
+      }
+    },
+    "consent": {
+      "const": true,
+      "description": "Explicit informed consent (or synthetic data). Pipeline refuses to run otherwise."
+    },
+    "isSynthetic": { "type": "boolean" }
+  }
+}

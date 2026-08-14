@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "description": "Machine-readable ARTH scoring configuration. Source of truth for weights, modifiers, and bands. See docs/02-arth-scoring-rubric.md for rationale.",
+  "dimensionWeights": {
+    "alignment": 0.3,
+    "riskExposure": 0.25,
+    "trajectory": 0.2,
+    "humanCapital": 0.25
+  },
+  "itemWeights": {
+    "alignment": { "A1": 0.3, "A2": 0.25, "A3": 0.2, "A4": 0.15, "A5": 0.1 },
+    "riskExposure": { "R1": 0.25, "R2": 0.25, "R3": 0.2, "R4": 0.15, "R5": 0.15 },
+    "trajectory": { "T1": 0.3, "T2": 0.2, "T3": 0.2, "T4": 0.2, "T5": 0.1 },
+    "humanCapital": { "H1": 0.3, "H2": 0.25, "H3": 0.25, "H4": 0.1, "H5": 0.1 }
+  },
+  "answerScale": { "min": 0, "max": 4 },
+  "modifiers": [
+    { "id": "T_TENURE_LONG", "dimension": "trajectory", "when": "yearsInCurrentRole >= 5", "delta": -10 },
+    { "id": "T_TENURE_FRESH", "dimension": "trajectory", "when": "yearsInCurrentRole <= 1 && careerStage != 'early'", "delta": 5 },
+    { "id": "T_PROMOTIONS", "dimension": "trajectory", "when": "promotionsLast5Years >= 2", "delta": 5 },
+    { "id": "R_VOLATILE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'high'", "delta": -10 },
+    { "id": "R_STABLE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'low'", "delta": 5 },
+    { "id": "H_NO_LINKEDIN", "dimension": "humanCapital", "when": "linkedInUrl is empty", "delta": -5 },
+    { "id": "H_MULTI_INDUSTRY", "dimension": "humanCapital", "when": "distinctIndustries >= 3", "delta": 5 },
+    { "id": "A_MISALIGNMENT_CONCERN", "dimension": "alignment", "when": "concernCategory == 'misalignment'", "delta": -5 }
+  ],
+  "modifierClamp": { "min": -15, "max": 10 },
+  "scoreClamp": { "min": 0, "max": 100 },
+  "bands": [
+    { "min": 85, "max": 100, "label": "Strong" },
+    { "min": 70, "max": 84, "label": "Stable" },
+    { "min": 55, "max": 69, "label": "Watch" },
+    { "min": 40, "max": 54, "label": "Vulnerable" },
+    { "min": 0, "max": 39, "label": "Critical" }
+  ],
+  "rounding": {
+    "dimensionScores": "display only — keep unrounded internally",
+    "overall": "computed from unrounded dimension scores, rounded once to nearest integer"
+  }
+}
