@@ -1,6 +1,7 @@
 {
-  "version": "1.0.0",
-  "description": "Machine-readable ARTH scoring configuration. Source of truth for weights, modifiers, and bands. See docs/02-arth-scoring-rubric.md for rationale.",
+  "version": "2.0.0-mvp",
+  "description": "Machine-readable ARTH scoring configuration. Source of truth for weights, modifiers, and bands. See docs/02-arth-scoring-rubric.md for rationale and docs/08-mvp-implementation.md for MVP changes.",
+  "methodologyNote": "All weights, modifiers, and thresholds are heuristic — chosen by the founding team and calibrated to the published sample score. They have NOT been empirically validated against career outcomes. The /sample-score calibration is kept as a regression test, not as validation.",
   "dimensionWeights": {
     "alignment": 0.3,
     "riskExposure": 0.25,
@@ -15,14 +16,14 @@
   },
   "answerScale": { "min": 0, "max": 4 },
   "modifiers": [
-    { "id": "T_TENURE_LONG", "dimension": "trajectory", "when": "yearsInCurrentRole >= 5", "delta": -10 },
-    { "id": "T_TENURE_FRESH", "dimension": "trajectory", "when": "yearsInCurrentRole <= 1 && careerStage != 'early'", "delta": 5 },
-    { "id": "T_PROMOTIONS", "dimension": "trajectory", "when": "promotionsLast5Years >= 2", "delta": 5 },
-    { "id": "R_VOLATILE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'high'", "delta": -10 },
-    { "id": "R_STABLE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'low'", "delta": 5 },
-    { "id": "H_NO_LINKEDIN", "dimension": "humanCapital", "when": "linkedInUrl is empty", "delta": -5 },
-    { "id": "H_MULTI_INDUSTRY", "dimension": "humanCapital", "when": "distinctIndustries >= 3", "delta": 5 },
-    { "id": "A_MISALIGNMENT_CONCERN", "dimension": "alignment", "when": "concernCategory == 'misalignment'", "delta": -5 }
+    { "id": "T_TENURE_LONG", "dimension": "trajectory", "when": "yearsInCurrentRole >= 5", "delta": -10, "active": true },
+    { "id": "T_TENURE_FRESH", "dimension": "trajectory", "when": "yearsInCurrentRole <= 1 && careerStage != 'early'", "delta": 5, "active": true },
+    { "id": "T_PROMOTIONS", "dimension": "trajectory", "when": "promotionsLast5Years >= 2", "delta": 5, "active": true },
+    { "id": "R_VOLATILE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'high'", "delta": -10, "active": true },
+    { "id": "R_STABLE_INDUSTRY", "dimension": "riskExposure", "when": "industryVolatility == 'low'", "delta": 5, "active": true },
+    { "id": "H_NO_LINKEDIN", "dimension": "humanCapital", "when": "linkedInUrl is empty", "delta": -5, "active": true },
+    { "id": "H_MULTI_INDUSTRY", "dimension": "humanCapital", "when": "distinctIndustries >= 3", "delta": 5, "active": false, "inactiveReason": "MVP intake does not collect full work history; reactivate when workHistory[] returns" },
+    { "id": "A_MISALIGNMENT_CONCERN", "dimension": "alignment", "when": "concernCategory == 'misalignment'", "delta": -5, "active": true }
   ],
   "modifierClamp": { "min": -15, "max": 10 },
   "scoreClamp": { "min": 0, "max": 100 },

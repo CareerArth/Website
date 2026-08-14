@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareerArth — Career Diagnostic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/styles.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="wordmark" href="/">Career<span class="gold">Arth</span></a>
+  <span class="tag">AI Diagnostic · Prototype</span>
+</div>
+
+<div class="shell">
+  <div class="card" id="intro-card">
+    <div class="eyebrow">The ARTH Career Diagnostic</div>
+    <h1 style="font-size:30px; margin-bottom:10px;">Where does your career actually stand?</h1>
+    <p class="muted" style="max-width:620px;">
+      A structured diagnostic across four dimensions — <b>Alignment</b>, <b>Risk Exposure</b>,
+      <b>Trajectory</b>, and <b>Human Capital</b> — followed by a personalised analysis of your
+      realistic paths forward. Takes about 6 minutes. Every analysis is reviewed by a human
+      consultant before it's final.
+    </p>
+    <div style="margin-top:14px;">
+      <label class="opt" for="persona-select" style="display:inline-block; margin-right:8px;">Demo: load a synthetic persona</label>
+      <select id="persona-select" style="width:auto; display:inline-block; font-size:13px; padding:6px 10px;">
+        <option value="">— start blank —</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="progress"><div id="progress-bar" style="width:0%"></div></div>
+    <div id="step-host"></div>
+    <div class="error-box" id="error-box"></div>
+    <div style="display:flex; justify-content:space-between; margin-top:24px;">
+      <button class="btn btn-ghost" id="btn-back" style="visibility:hidden;">Back</button>
+      <button class="btn btn-primary" id="btn-next">Continue</button>
+    </div>
+  </div>
+
+  <p class="small muted" style="text-align:center;">
+    Prototype for research &amp; validation. Scores use a heuristic rubric that has not been
+    empirically validated. Nothing here is a promise of career outcomes.
+  </p>
+</div>
+
+<div class="loading" id="loading" style="display:none;">
+  <div class="spinner"></div>
+  <h2>Building your diagnostic…</h2>
+  <p class="muted">Scoring your ARTH profile, matching career paths, drafting your analysis.</p>
+</div>
+
+<script src="/web/intake.js"></script>
+</body>
+</html>

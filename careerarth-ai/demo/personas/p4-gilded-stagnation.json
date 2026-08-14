@@ -1,0 +1,19 @@
+{
+  "id": "p4-gilded-stagnation",
+  "fullName": "Vikram Nair",
+  "email": "vikram.demo@example.com",
+  "currentRole": "Senior Software Engineer",
+  "industry": "technology",
+  "yearsExperience": 14,
+  "yearsInCurrentRole": 7,
+  "promotionsLast5Years": 0,
+  "linkedInUrl": "https://linkedin.com/in/vikram-demo",
+  "skills": ["cobol", "mainframe systems", "batch processing", "sql", "production support"],
+  "goals": { "targetRole": "", "targetIndustry": "", "horizonYears": 5, "narrative": "The pay is excellent. That's exactly what worries me — I'm paid for a system, not for skills the market wants." },
+  "constraints": ["mortgage — cannot take a large pay cut", "single-earner household"],
+  "concern": "I'm the best-paid engineer I know on a stack nobody is hiring for. If this platform sunsets, I honestly don't know what I'd be worth outside.",
+  "concernCategory": "layoff-risk",
+  "questionnaire": { "A1": 3, "A2": 2, "A3": 3, "A4": 2, "A5": 1, "R1": 2, "R2": 1, "R3": 0, "R4": 1, "R5": 3, "T1": 1, "T2": 0, "T3": 1, "T4": 1, "T5": 1, "H1": 3, "H2": 2, "H3": 2, "H4": 2, "H5": 1 },
+  "consent": true,
+  "isSynthetic": true
+}

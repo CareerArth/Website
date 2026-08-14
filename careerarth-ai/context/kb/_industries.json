@@ -1,0 +1,22 @@
+{
+  "note": "Industry volatility ratings are heuristic labels assigned by the founding team for MVP scoring; not empirically derived.",
+  "industries": {
+    "technology": "medium",
+    "finance": "low",
+    "marketing": "medium",
+    "professional-services": "medium",
+    "healthcare": "low",
+    "education": "low",
+    "government": "low",
+    "manufacturing": "medium",
+    "logistics": "medium",
+    "telecom": "medium",
+    "energy": "medium",
+    "retail": "high",
+    "media": "high",
+    "hospitality": "high",
+    "real-estate": "high",
+    "nonprofit": "low"
+  },
+  "fallback": "medium"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "careerarth-ai-mvp",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "CareerArth AI capstone MVP — ARTH diagnostic engine with web intake, customer report, and consultant review.",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "dev": "tsx watch src/server.ts",
+    "demo": "tsx demo/run-demo.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.74.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

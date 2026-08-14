@@ -1,0 +1,19 @@
+{
+  "id": "p6-returner",
+  "fullName": "Meera Kulkarni",
+  "email": "meera.demo@example.com",
+  "currentRole": "Digital Marketing Manager",
+  "industry": "marketing",
+  "yearsExperience": 6,
+  "yearsInCurrentRole": 0.5,
+  "promotionsLast5Years": 0,
+  "linkedInUrl": "",
+  "skills": ["campaign management", "content strategy", "email marketing", "analytics"],
+  "goals": { "targetRole": "Digital Marketing Manager", "targetIndustry": "marketing", "horizonYears": 3, "narrative": "Back after an 18-month break for family care. The tools moved on while I was out." },
+  "constraints": ["limited runway — need income stability", "school-hours schedule preferred"],
+  "concern": "I'm six months into re-entry after an 18-month career break. My instincts are intact but my toolkit and network both feel stale, and the AI wave hit marketing hard while I was away.",
+  "concernCategory": "transition",
+  "questionnaire": { "A1": 3, "A2": 3, "A3": 3, "A4": 3, "A5": 2, "R1": 2, "R2": 2, "R3": 1, "R4": 2, "R5": 0, "T1": 1, "T2": 2, "T3": 0, "T4": 2, "T5": 2, "H1": 2, "H2": 1, "H3": 3, "H4": 3, "H5": 2 },
+  "consent": true,
+  "isSynthetic": true
+}

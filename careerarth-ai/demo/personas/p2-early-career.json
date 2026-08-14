@@ -1,0 +1,19 @@
+{
+  "id": "p2-early-career",
+  "fullName": "Ananya Iyer",
+  "email": "ananya.demo@example.com",
+  "currentRole": "Software Engineer",
+  "industry": "technology",
+  "yearsExperience": 2,
+  "yearsInCurrentRole": 1.5,
+  "promotionsLast5Years": 1,
+  "linkedInUrl": "",
+  "skills": ["python", "react", "sql", "debugging", "testing"],
+  "goals": { "targetRole": "", "targetIndustry": "technology", "horizonYears": 5, "narrative": "Learning fast but I don't know if I should go deep technical, or toward product, or something else." },
+  "constraints": [],
+  "concern": "Two years in and everything is moving fast. I'm growing, but I have no map and basically zero professional network.",
+  "concernCategory": "growth",
+  "questionnaire": { "A1": 3, "A2": 3, "A3": 3, "A4": 2, "A5": 2, "R1": 3, "R2": 3, "R3": 4, "R4": 3, "R5": 1, "T1": 3, "T2": 4, "T3": 2, "T4": 3, "T5": 3, "H1": 1, "H2": 2, "H3": 2, "H4": 3, "H5": 1 },
+  "consent": true,
+  "isSynthetic": true
+}

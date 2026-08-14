@@ -1,0 +1,19 @@
+{
+  "id": "p1-plateaued",
+  "fullName": "Rohan Mehta",
+  "email": "rohan.demo@example.com",
+  "currentRole": "Operations Manager",
+  "industry": "professional-services",
+  "yearsExperience": 12,
+  "yearsInCurrentRole": 6,
+  "promotionsLast5Years": 0,
+  "linkedInUrl": "https://linkedin.com/in/rohan-demo",
+  "skills": ["process improvement", "team leadership", "vendor management", "budgeting", "project management"],
+  "goals": { "targetRole": "", "targetIndustry": "", "horizonYears": 5, "narrative": "I keep the machine running but I can't see what's next for me." },
+  "constraints": ["prefer not to relocate"],
+  "concern": "Six years in the same seat. Solid reviews, no movement, and honestly no idea what the next move even is.",
+  "concernCategory": "stagnation",
+  "questionnaire": { "A1": 3, "A2": 3, "A3": 2, "A4": 3, "A5": 4, "R1": 2, "R2": 2, "R3": 1, "R4": 2, "R5": 3, "T1": 1, "T2": 2, "T3": 1, "T4": 1, "T5": 2, "H1": 3, "H2": 4, "H3": 3, "H4": 2, "H5": 2 },
+  "consent": true,
+  "isSynthetic": true
+}

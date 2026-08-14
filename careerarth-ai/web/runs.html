@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runs — CareerArth AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/styles.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="wordmark" href="/">Career<span class="gold">Arth</span></a>
+  <span class="tag">Diagnostic Runs</span>
+</div>
+<div class="shell wide">
+  <div class="card">
+    <div class="eyebrow">Internal</div>
+    <h1 style="font-size:24px; margin-bottom:14px;">Diagnostic runs</h1>
+    <div class="table-scroll">
+      <table class="runs-table" id="tbl">
+        <tr><th>Created</th><th>Name</th><th>Score</th><th>Band</th><th>Generator</th><th>Lint</th><th>Status</th><th></th></tr>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:12px;"><a href="/">← New diagnostic</a> &nbsp;·&nbsp; <a href="/api/metrics" target="_blank">Metrics JSON →</a></p>
+  </div>
+</div>
+<script>
+fetch('/api/runs').then(r => r.json()).then(runs => {
+  const esc = (s) => { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; };
+  const rows = runs.map(r => `<tr>
+    <td class="small">${new Date(r.createdAt).toLocaleString()}</td>
+    <td>${esc(r.fullName)}${r.isSynthetic ? ' <span class="small muted">(synthetic)</span>' : ''}</td>
+    <td><b>${r.overall}</b></td>
+    <td><span class="band band-${r.band}">${r.band}</span></td>
+    <td class="small">${r.generator}</td>
+    <td class="small">${r.lintOk ? '<span class="lint-ok">pass</span>' : '<span class="lint-bad">issues</span>'}</td>
+    <td><span class="badge ${r.status === 'reviewed' ? 'badge-reviewed' : 'badge-draft'}">${r.status}</span></td>
+    <td class="small"><a href="/report/${r.id}">report</a> · <a href="/review/${r.id}">review</a></td>
+  </tr>`).join('');
+  document.getElementById('tbl').insertAdjacentHTML('beforeend', rows || '<tr><td colspan="8" class="muted">No runs yet — run the demo script or take the diagnostic.</td></tr>');
+});
+</script>
+</body>
+</html>
