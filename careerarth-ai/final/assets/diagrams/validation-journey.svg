@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 430" font-family="'Work Sans','Segoe UI',sans-serif">
+  <defs>
+    <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2C3A35"/>
+    </marker>
+  </defs>
+  <rect width="1240" height="430" fill="#F7F3E8"/>
+  <text x="620" y="40" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#1E3329" font-weight="bold">Validation Journey — Completed Capstone vs. Proposed Next 90 Days</text>
+
+  <!-- completed band -->
+  <rect x="30" y="70" width="560" height="150" rx="12" fill="#1E3329"/>
+  <text x="46" y="96" font-size="13" fill="#B59654" font-weight="600" letter-spacing="2">COMPLETED IN THIS CAPSTONE (STAGES 1–4)</text>
+  <g font-size="12.5" fill="#F7F3E8">
+    <rect x="48" y="112" width="120" height="88" rx="8" fill="#2C3A35" stroke="#B59654"/>
+    <text x="108" y="136" text-anchor="middle" font-weight="600">Specification</text>
+    <text x="108" y="154" text-anchor="middle" font-size="11" fill="#E6E1D6">ARTH rubric · KB ·</text>
+    <text x="108" y="169" text-anchor="middle" font-size="11" fill="#E6E1D6">prompt design</text>
+    <rect x="182" y="112" width="120" height="88" rx="8" fill="#2C3A35" stroke="#B59654"/>
+    <text x="242" y="136" text-anchor="middle" font-weight="600">Working MVP</text>
+    <text x="242" y="154" text-anchor="middle" font-size="11" fill="#E6E1D6">intake → report →</text>
+    <text x="242" y="169" text-anchor="middle" font-size="11" fill="#E6E1D6">review · 42/42 tests</text>
+    <rect x="316" y="112" width="120" height="88" rx="8" fill="#2C3A35" stroke="#B59654"/>
+    <text x="376" y="136" text-anchor="middle" font-weight="600">Business plan</text>
+    <text x="376" y="154" text-anchor="middle" font-size="11" fill="#E6E1D6">ICP · model B · pricing</text>
+    <text x="376" y="169" text-anchor="middle" font-size="11" fill="#E6E1D6">hypotheses · GTM</text>
+    <rect x="450" y="112" width="120" height="88" rx="8" fill="#2C3A35" stroke="#B59654"/>
+    <text x="510" y="136" text-anchor="middle" font-weight="600">Evidence audit</text>
+    <text x="510" y="154" text-anchor="middle" font-size="11" fill="#E6E1D6">claim boundaries ·</text>
+    <text x="510" y="169" text-anchor="middle" font-size="11" fill="#E6E1D6">pilot kit ready</text>
+  </g>
+
+  <!-- proposed band -->
+  <rect x="650" y="70" width="560" height="150" rx="12" fill="#FFFFFF" stroke="#B59654" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="666" y="96" font-size="13" fill="#B59654" font-weight="600" letter-spacing="2">PROPOSED — NOT YET EXECUTED</text>
+  <g font-size="12.5" fill="#1A1C1B">
+    <rect x="668" y="112" width="160" height="88" rx="8" fill="#F0ECE1" stroke="#B59654"/>
+    <text x="748" y="132" text-anchor="middle" font-weight="600">Days 1–30</text>
+    <text x="748" y="150" text-anchor="middle" font-size="11" fill="#2C3A35">first real Claude reports ·</text>
+    <text x="748" y="165" text-anchor="middle" font-size="11" fill="#2C3A35">10–20-user pilot ·</text>
+    <text x="748" y="180" text-anchor="middle" font-size="11" fill="#2C3A35">production funnel baseline</text>
+    <rect x="842" y="112" width="160" height="88" rx="8" fill="#F0ECE1" stroke="#B59654"/>
+    <text x="922" y="132" text-anchor="middle" font-weight="600">Days 31–60</text>
+    <text x="922" y="150" text-anchor="middle" font-size="11" fill="#2C3A35">pricing anchors · real</text>
+    <text x="922" y="165" text-anchor="middle" font-size="11" fill="#2C3A35">consultant review timing ·</text>
+    <text x="922" y="180" text-anchor="middle" font-size="11" fill="#2C3A35">re-run unit economics</text>
+    <rect x="1016" y="112" width="160" height="88" rx="8" fill="#F0ECE1" stroke="#B59654"/>
+    <text x="1096" y="132" text-anchor="middle" font-weight="600">Days 61–90</text>
+    <text x="1096" y="150" text-anchor="middle" font-size="11" fill="#2C3A35">report-quality check at</text>
+    <text x="1096" y="165" text-anchor="middle" font-size="11" fill="#2C3A35">pilot scale · synthesis vs</text>
+    <text x="1096" y="180" text-anchor="middle" font-size="11" fill="#2C3A35">thresholds · decision memo</text>
+  </g>
+
+  <line x1="590" y1="145" x2="648" y2="145" stroke="#2C3A35" stroke-width="2.5" marker-end="url(#arr3)"/>
+
+  <!-- decision gate -->
+  <g>
+    <polygon points="620,265 700,315 620,365 540,315" fill="#B59654"/>
+    <text x="620" y="308" text-anchor="middle" font-size="13" fill="#1A1C1B" font-weight="700">Day-90</text>
+    <text x="620" y="326" text-anchor="middle" font-size="13" fill="#1A1C1B" font-weight="700">decision</text>
+    <line x1="1096" y1="202" x2="1096" y2="315" stroke="#2C3A35" stroke-width="2" fill="none"/>
+    <line x1="1096" y1="315" x2="702" y2="315" stroke="#2C3A35" stroke-width="2" marker-end="url(#arr3)"/>
+  </g>
+  <g font-size="13" fill="#1A1C1B">
+    <rect x="80" y="240" width="150" height="40" rx="20" fill="#FFFFFF" stroke="#3d6b4f" stroke-width="2"/>
+    <text x="155" y="265" text-anchor="middle" font-weight="600" fill="#3d6b4f">Continue</text>
+    <rect x="80" y="292" width="150" height="40" rx="20" fill="#FFFFFF" stroke="#B59654" stroke-width="2"/>
+    <text x="155" y="317" text-anchor="middle" font-weight="600" fill="#8a6f35">Revise one variable</text>
+    <rect x="270" y="240" width="150" height="40" rx="20" fill="#FFFFFF" stroke="#B59654" stroke-width="2"/>
+    <text x="345" y="265" text-anchor="middle" font-weight="600" fill="#8a6f35">Pivot product</text>
+    <rect x="270" y="292" width="150" height="40" rx="20" fill="#FFFFFF" stroke="#9c3d2e" stroke-width="2"/>
+    <text x="345" y="317" text-anchor="middle" font-weight="600" fill="#9c3d2e">Stop</text>
+  </g>
+  <g stroke="#2C3A35" stroke-width="1.8" fill="none" marker-end="url(#arr3)">
+    <line x1="538" y1="305" x2="425" y2="286"/>
+    <line x1="538" y1="325" x2="425" y2="308"/>
+  </g>
+  <text x="620" y="405" text-anchor="middle" font-size="12.5" fill="#2C3A35" font-style="italic">Every gate metric maps to instrumentation already built into the MVP — no new engineering is required to run the pilot.</text>
+</svg>
