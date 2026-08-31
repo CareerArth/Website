@@ -19,11 +19,12 @@ export interface ScoringConfig {
   bands: { min: number; max: number; label: string }[];
 }
 
-let cached: ScoringConfig | null = null;
-
+/**
+ * Re-read on every call (not cached): the admin dashboard writes this file directly,
+ * and edits must take effect on the next request without a server restart.
+ */
 export function loadConfig(): ScoringConfig {
-  if (!cached) cached = JSON.parse(readFileSync(configPath, 'utf8')) as ScoringConfig;
-  return cached;
+  return JSON.parse(readFileSync(configPath, 'utf8')) as ScoringConfig;
 }
 
 export function bandFor(score: number, config: ScoringConfig = loadConfig()): string {

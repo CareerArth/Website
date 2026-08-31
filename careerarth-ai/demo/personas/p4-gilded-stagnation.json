@@ -13,7 +13,7 @@
   "constraints": ["mortgage — cannot take a large pay cut", "single-earner household"],
   "concern": "I'm the best-paid engineer I know on a stack nobody is hiring for. If this platform sunsets, I honestly don't know what I'd be worth outside.",
   "concernCategory": "layoff-risk",
-  "questionnaire": { "A1": 3, "A2": 2, "A3": 3, "A4": 2, "A5": 1, "R1": 2, "R2": 1, "R3": 0, "R4": 1, "R5": 3, "T1": 1, "T2": 0, "T3": 1, "T4": 1, "T5": 1, "H1": 3, "H2": 2, "H3": 2, "H4": 2, "H5": 1 },
+  "questionnaire": { "A1": 4, "A2": 0, "A3": 1, "A4": 0, "A5": 1, "R1": 0, "R2": 1, "R3": 0, "R4": 0, "R5": 1, "T1": 0, "T2": 1, "T3": 4, "T4": 0, "T5": 2, "H1": 4, "H2": 2, "H3": 1, "H4": 1, "H5": 3 },
   "consent": true,
   "isSynthetic": true
 }

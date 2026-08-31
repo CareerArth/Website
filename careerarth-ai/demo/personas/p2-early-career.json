@@ -13,7 +13,7 @@
   "constraints": [],
   "concern": "Two years in and everything is moving fast. I'm growing, but I have no map and basically zero professional network.",
   "concernCategory": "growth",
-  "questionnaire": { "A1": 3, "A2": 3, "A3": 3, "A4": 2, "A5": 2, "R1": 3, "R2": 3, "R3": 4, "R4": 3, "R5": 1, "T1": 3, "T2": 4, "T3": 2, "T4": 3, "T5": 3, "H1": 1, "H2": 2, "H3": 2, "H4": 3, "H5": 1 },
+  "questionnaire": { "A1": 4, "A2": 4, "A3": 4, "A4": 3, "A5": 4, "R1": 3, "R2": 2, "R3": 1, "R4": 2, "R5": 4, "T1": 4, "T2": 2, "T3": 0, "T4": 4, "T5": 1, "H1": 1, "H2": 4, "H3": 0, "H4": 1, "H5": 2 },
   "consent": true,
   "isSynthetic": true
 }

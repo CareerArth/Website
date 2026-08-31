@@ -1,47 +1,53 @@
 /* CareerArth AI — intake wizard (vanilla JS, no build step) */
 
+/* Item wording + scoring key: CA_BADS_Summer_2026_D2.xlsx (Professor Tushar Jaruhar).
+   Third tuple element = reverse-scored (Strongly Agree stored as low, not high).
+   T3 and H2 are phrased negatively like the reverse items but are keyed forward in the
+   source sheet — implemented literally as given; see docs/09 for the flagged question
+   to confirm with the professor before relying on it for anything grade-affecting. */
 const QUESTIONS = {
   A: {
-    label: 'Alignment', intro: 'How well your current work builds toward where you want to go.',
+    label: 'Alignment', intro: 'How well your current skills and effort line up with where the market is going.',
     items: [
-      ['A1', 'My day-to-day work directly builds toward the career position I want in 5–10 years.', 'Nothing to do with it', 'Direct stepping stone'],
-      ['A2', 'My strongest skills are actively used and valued in my current role.', 'Best skills sit unused', 'Role is built around them'],
-      ['A3', 'The industry I work in today is where (or adjacent to where) I want my future career.', 'Want out entirely', 'Same or adjacent'],
-      ['A4', 'The content of my work is genuinely interesting to me and consistent with what I value.', 'Indifferent / opposed', 'Strongly engaged'],
-      ['A5', 'I can state my long-term career goal in one specific sentence.', 'No idea', 'Specific role + timeline'],
+      ['A1', 'Relevant opportunities rarely come to you unless you actively apply or reach out yourself.', false],
+      ['A2', 'Your current skills are well aligned with what employers in your market actively demand today.', false],
+      ['A3', 'You are actively building skills that are likely to become more valuable over the next few years.', false],
+      ['A4', 'Your current role helps you perform today, but it is not meaningfully building capabilities that will remain valuable in future roles or career moves.', true],
+      ['A5', 'The industry you work in is likely to create meaningful long-term growth and opportunity over the next decade.', false],
     ],
   },
   R: {
-    label: 'Risk Exposure', intro: 'How insulated you are from industry shifts and skill obsolescence.',
+    label: 'Risk Exposure', intro: 'How exposed you would be if your current role or income were disrupted.',
     items: [
-      ['R1', "My industry's demand for people like me will be stable or growing over the next 5 years.", 'Clearly shrinking', 'Clearly growing'],
-      ['R2', 'The core of my job would be hard to automate or commoditise with current technology.', 'Largely automatable', 'Hard to automate'],
-      ['R3', 'I have meaningfully updated my core professional skills within the last 2 years.', 'Refreshed 5+ yrs ago', 'Within 12 months'],
-      ['R4', 'If my employer disappeared tomorrow, my skills and reputation would transfer intact.', 'Tied to this employer', 'Fully portable'],
-      ['R5', 'I could absorb a 6-month career disruption financially and geographically.', 'No flexibility', 'Comfortable runway'],
+      ['R1', 'If you had to leave your current role, you could realistically secure a comparable or better opportunity within the next six months.', false],
+      ['R2', 'The core work you do is unlikely to be significantly reduced, replaced, or devalued by automation or AI in the near future.', false],
+      ['R3', 'A job loss, career break, or transition would put you under immediate financial pressure.', true],
+      ['R4', 'Your monthly expenses and financial responsibilities do not force you to stay in your current role. If needed, you could leave and take a temporary pay cut or transition role without significant financial strain.', false],
+      ['R5', 'Your career choices are heavily restricted by location, family responsibilities, health, or other personal constraints.', true],
     ],
   },
   T: {
-    label: 'Trajectory', intro: 'Whether your options are expanding or narrowing.',
+    label: 'Trajectory', intro: 'Whether your scope, visibility, and momentum are expanding or stalling.',
     items: [
-      ['T1', 'Over the last 3 years my responsibilities, scope, or level have grown materially.', 'Identical / reduced', 'Step-change growth'],
-      ['T2', 'In the last 12 months I acquired a new skill, credential, or body of expertise.', 'Nothing new', 'Multiple additions'],
-      ['T3', 'I receive credible external interest — relevant recruiter outreach, interviews, or offers.', 'None in 2 years', 'Regular and relevant'],
-      ['T4', 'My career options feel like they are expanding rather than narrowing.', 'Clearly narrowing', 'Clearly expanding'],
-      ['T5', 'I can name a realistic next role and roughly how I would get there.', 'No visible step', 'Named role + path'],
+      ['T1', 'Over the past few years, your role has expanded in scope, complexity, or decision-making authority.', false],
+      ['T2', 'Your work is visible to senior leaders or key decision-makers.', false],
+      ['T3', 'Real opportunities for promotion, expanded responsibility, or better roles have become infrequent for you.', false],
+      ['T4', 'Looking back over the past few years, your career has not moved forward in a clear or meaningful way.', true],
+      ['T5', 'You are trusted with work or decisions where the stakes, visibility, or business impact are high.', false],
     ],
   },
   H: {
-    label: 'Human Capital', intro: 'The strength of your network, brand, and transferable assets.',
+    label: 'Human Capital', intro: 'The strength of your expertise, network, and visible proof of your value.',
     items: [
-      ['H1', 'Several senior people outside my employer would take my call and advocate for me.', 'None', 'Five or more'],
-      ['H2', 'My professional work is visible beyond my employer (LinkedIn, portfolio, talks, community).', 'Invisible externally', 'Recognised in my niche'],
-      ['H3', 'My skill set would be valued across multiple roles or industries.', 'Single role/industry', 'Cross-industry'],
-      ['H4', 'My credentials signal well for the roles I want next.', 'Missing expected credential', 'Fully credentialed'],
-      ['H5', 'I have mentors or sponsors who actively help me navigate career decisions.', 'No one', 'Active mentors + sponsor'],
+      ['H1', 'Your expertise is strong enough to help you command above-average compensation for someone with similar experience in your field.', false],
+      ['H2', 'Your LinkedIn, resume, or professional profile does not clearly communicate the skills, strengths, and achievements that distinguish you.', false],
+      ['H3', 'You have relationships with people who could realistically help you access new roles, clients, or career opportunities.', false],
+      ['H4', 'It would be difficult for others to quickly verify your achievements through credible evidence such as recommendations, endorsements, strong work proof, or visible accomplishments.', true],
+      ['H5', 'The work you do depends on judgment, expertise, or problem-solving that would be difficult to replace with automation or AI.', false],
     ],
   },
 };
+const LIKERT = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
 
 const INDUSTRIES = ['technology','finance','marketing','professional-services','healthcare','education','government','manufacturing','logistics','telecom','energy','retail','media','hospitality','real-estate','nonprofit','other'];
 const CONCERNS = [
@@ -195,18 +201,22 @@ function renderLikert(dim) {
   const q = QUESTIONS[dim];
   host.innerHTML = `
     <h2>${q.label}</h2>
-    <p class="muted small">${q.intro} &nbsp;·&nbsp; 0 = not at all, 4 = fully.</p>
-    ${q.items.map(([id, text, lo, hi]) => `
-      <div class="q" data-q="${id}">
+    <p class="muted small">${q.intro}</p>
+    ${q.items.map(([id, text, reverse]) => {
+      const stored = state.data.questionnaire[id];
+      return `
+      <div class="q" data-q="${id}" data-reverse="${reverse}">
         <p>${text}</p>
-        <div class="likert">${[0,1,2,3,4].map((v) =>
-          `<button type="button" data-v="${v}" class="${state.data.questionnaire[id] === v ? 'sel' : ''}">${v}</button>`).join('')}</div>
-        <div class="anchors"><span>${lo}</span><span>${hi}</span></div>
-      </div>`).join('')}`;
+        <div class="likert">${LIKERT.map((label, v) =>
+          `<button type="button" data-v="${v}" class="${stored === (reverse ? 4 - v : v) ? 'sel' : ''}">${label}</button>`).join('')}</div>
+      </div>`;
+    }).join('')}`;
   document.querySelectorAll('.q').forEach((qEl) => {
+    const reverse = qEl.dataset.reverse === 'true';
     qEl.querySelectorAll('.likert button').forEach((b) => {
       b.addEventListener('click', () => {
-        state.data.questionnaire[qEl.dataset.q] = +b.dataset.v;
+        const v = +b.dataset.v;
+        state.data.questionnaire[qEl.dataset.q] = reverse ? 4 - v : v;
         qEl.querySelectorAll('.likert button').forEach((x) => x.classList.toggle('sel', x === b));
       });
     });

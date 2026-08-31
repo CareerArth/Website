@@ -49,28 +49,37 @@ describe('end-to-end synthetic flows (mock generator)', () => {
   });
 
   it('persona scores land in the expected, meaningfully different positions', () => {
+    // Re-derived for the Prof. Tushar Jaruhar questionnaire (CA_BADS_Summer_2026_D2.xlsx,
+    // docs/04-diagnostic-questionnaire.md) — item content and scoring key are entirely
+    // different from the original Stage 1 questionnaire, so exact score thresholds were
+    // recomputed against real pipeline runs rather than hand-calculated. See
+    // docs/09-admin-dashboard-and-new-questionnaire.md for the persona-by-persona detail
+    // and the T3/H2 scoring-key ambiguity that materially affects several of these.
     const s = (id: string) => runs[id].scores;
-    // p1 plateaued — the Stage 1 worked example
-    expect(s('p1-plateaued').overall).toBe(58);
-    expect(s('p1-plateaued').overallBand).toBe('Watch');
-    // p2 early-career: strong trajectory, weak human capital
+    // p1 plateaued: strong human capital, critical trajectory (tenure penalty)
+    expect(s('p1-plateaued').overall).toBe(50);
+    expect(s('p1-plateaued').overallBand).toBe('Vulnerable');
+    expect(s('p1-plateaued').dimensions.trajectory.band).toBe('Critical');
+    // p2 early-career: elevated trajectory, weak human capital (thin network, no LinkedIn)
     const p2 = s('p2-early-career').dimensions;
     expect(p2.humanCapital.score).toBeLessThan(45);
-    expect(p2.trajectory.score).toBeGreaterThan(70);
-    // p4 gilded stagnation: vulnerable overall despite seniority
+    expect(p2.trajectory.score).toBeGreaterThan(55);
+    // p4 gilded stagnation: vulnerable/critical overall despite seniority and high pay
     expect(s('p4-gilded-stagnation').overall).toBeLessThanOrEqual(45);
-    // p5 high performer: Strong band, trajectory clamped high
-    expect(s('p5-high-performer').overall).toBeGreaterThanOrEqual(85);
-    expect(s('p5-high-performer').overallBand).toBe('Strong');
-    expect(s('p5-high-performer').dimensions.trajectory.score).toBe(100);
+    // p5 high performer: comfortably the top-scoring persona, trajectory modifiers both fire
+    expect(s('p5-high-performer').overall).toBeGreaterThanOrEqual(70);
+    expect(s('p5-high-performer').dimensions.trajectory.score).toBe(90);
+    expect(s('p5-high-performer').dimensions.trajectory.modifiers.map((m) => m.id).sort()).toEqual(['T_PROMOTIONS', 'T_TENURE_FRESH']);
     // p6 returner: fresh-tenure modifier fired, no-LinkedIn penalty fired
     const p6 = s('p6-returner').dimensions;
     expect(p6.trajectory.modifiers.map((m) => m.id)).toContain('T_TENURE_FRESH');
     expect(p6.humanCapital.modifiers.map((m) => m.id)).toContain('H_NO_LINKEDIN');
-    // overall spread: outputs meaningfully differ
+    // outputs meaningfully differ across personas
     const overalls = Object.values(runs).map((r) => r.scores.overall);
     expect(Math.max(...overalls) - Math.min(...overalls)).toBeGreaterThan(30);
     expect(new Set(Object.values(runs).map((r) => r.scores.overallBand)).size).toBeGreaterThanOrEqual(3);
+    // p5 is the strongest persona and p4 the weakest, regardless of exact thresholds
+    expect(s('p5-high-performer').overall).toBeGreaterThan(s('p4-gilded-stagnation').overall);
   });
 
   it('reports differ meaningfully across personas (paths + diagnosis text)', () => {

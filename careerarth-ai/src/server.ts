@@ -1,16 +1,19 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, extname } from 'node:path';
 import { runDiagnostic, ValidationError } from './pipeline.js';
 import { loadRun, saveRun, listRuns, logEvent, type EventType } from './store.js';
 import { metricsSummary } from './metrics.js';
+import { loadConfig, type ScoringConfig } from './scoring/score.js';
 import type { Review, Run } from './types.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const webDir = join(here, '..', 'web');
 const personasDir = join(here, '..', 'demo', 'personas');
+const configPath = join(here, '..', 'context', 'scoring-config.json');
 const PORT = Number(process.env.PORT ?? 4747);
+const CONFIG_KEYS: (keyof ScoringConfig)[] = ['dimensionWeights', 'itemWeights', 'answerScale', 'modifiers', 'modifierClamp', 'scoreClamp', 'bands'];
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -86,6 +89,7 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && /^\/report\/[\w-]+$/.test(path)) return serveFile(res, 'report.html');
     if (req.method === 'GET' && /^\/review\/[\w-]+$/.test(path)) return serveFile(res, 'review.html');
     if (req.method === 'GET' && path === '/runs') return serveFile(res, 'runs.html');
+    if (req.method === 'GET' && path === '/admin') return serveFile(res, 'admin.html');
     if (req.method === 'GET' && path.startsWith('/web/')) return serveFile(res, path.slice(5));
 
     // ---------- API ----------
@@ -171,6 +175,22 @@ const server = createServer(async (req, res) => {
 
     if (req.method === 'GET' && path === '/api/metrics') {
       return json(res, 200, metricsSummary());
+    }
+
+    // ---------- admin: scoring config ----------
+    if (req.method === 'GET' && path === '/api/config') {
+      return json(res, 200, loadConfig());
+    }
+
+    if (req.method === 'POST' && path === '/api/config') {
+      const body = (await readBody(req)) as Partial<ScoringConfig>;
+      const missing = CONFIG_KEYS.filter((k) => body[k] === undefined);
+      if (missing.length) return json(res, 422, { error: `Missing config field(s): ${missing.join(', ')}` });
+      // preserve read-only descriptive fields from the existing file rather than trust the client for them
+      const existing = loadConfig();
+      const next: ScoringConfig = { ...existing, ...body, version: existing.version, methodologyNote: existing.methodologyNote };
+      writeFileSync(configPath, JSON.stringify(next, null, 2), 'utf8');
+      return json(res, 200, { ok: true, config: next });
     }
 
     return send(res, 404, 'Not found', 'text/plain');

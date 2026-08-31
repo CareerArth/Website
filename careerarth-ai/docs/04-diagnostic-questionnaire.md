@@ -1,102 +1,93 @@
-# 04 — ARTH Diagnostic Questionnaire (Draft)
+# 04 — ARTH Diagnostic Questionnaire
 
-Week-1 deliverable. 20 items, 5 per dimension, each answered on a 0–4 scale. Item IDs
-map 1:1 to the weights in `docs/02-arth-scoring-rubric.md` §2.1 and to the
-`questionnaire` object in `context/profile.schema.json`.
+**Revision note (2026):** this questionnaire was replaced with the wording and scoring
+key supplied by Professor Tushar Jaruhar (`CA_BADS_Summer_2026_D2.xlsx`, course
+CA_BADS Summer 2026). It keeps the same structure as the original Stage-1 draft — 20
+items, 5 per ARTH dimension, item IDs `A1`–`H5` unchanged — so no schema, validation, or
+scoring-code changes were needed; only item text, the answer scale, and reverse-scoring
+changed. See `docs/09-admin-dashboard-and-new-questionnaire.md` for the full change
+rationale and the source-mapping table (spreadsheet row → item ID).
 
-Answer scale (shown to the respondent under every item):
+Each item is answered on a standard 5-point Likert scale, shown to the respondent as
+category labels (not raw numbers):
 
-| Value | Meaning |
-|---|---|
-| 0 | Not at all / never / very weak |
-| 1 | Slightly / rarely / weak |
-| 2 | Moderately / sometimes / average |
-| 3 | Largely / often / strong |
-| 4 | Fully / consistently / very strong |
+| Label | Strongly Disagree | Disagree | Neutral | Agree | Strongly Agree |
+|---|---|---|---|---|---|
 
-Per-item anchors below give the 0 and 4 endpoints so answers are comparable across
-respondents (and so a consultant can sanity-check them during review).
+Internally, every answer is still stored as an integer **0–4** (Strongly Disagree=0 …
+Strongly Agree=4 for a forward-scored item), so `context/scoring-config.json`'s
+`answerScale`, `context/profile.schema.json`, and `src/scoring/score.ts` are unchanged
+from the original spec — the mapping happens once, at intake, in `web/intake.js`.
+
+## Reverse-scored items
+
+Five items describe a negative or vulnerable situation, so agreeing with them should
+*lower*, not raise, the dimension score. For these, the stored value is inverted
+(`4 − Likert position`) at the point of intake:
+
+**A4, R3, R5, T4, H4**
+
+**Flag for the professor — not silently resolved:** two items (**T3**, **H2**) are
+phrased negatively in the same way as the reverse-scored items above, but the source
+spreadsheet keys them **forward** (Strongly Agree = highest raw score), not reversed.
+This questionnaire implements the sheet exactly as given. Before using results from
+this questionnaire for anything grade-affecting, confirm with the professor whether T3
+and H2 were intentionally left forward-keyed or should be reverse-scored like their
+neighbors (T4, H4). See `docs/09-admin-dashboard-and-new-questionnaire.md` §"Open
+question for the professor" for the side-by-side comparison that prompted this flag.
 
 ## A — Alignment
 
-- **A1. Role–ambition coherence.** "My day-to-day work directly builds toward the career
-  position I want to hold in 5–10 years."
-  *(0 = my current work has nothing to do with where I want to end up; 4 = it is a direct stepping stone)*
-- **A2. Skills utilization.** "My strongest skills are actively used and valued in my
-  current role."
-  *(0 = my best skills sit unused; 4 = my role is built around them)*
-- **A3. Industry/domain fit.** "The industry I work in today is the industry (or an
-  adjacent one) where I want my future career."
-  *(0 = I want out of this industry entirely; 4 = same or deliberately adjacent industry)*
-- **A4. Values & interest fit.** "The content of my work is genuinely interesting to me
-  and consistent with what I value."
-  *(0 = I am indifferent or opposed to what the work is; 4 = strongly engaged)*
-- **A5. Goal clarity.** "I can state my long-term career goal in one specific sentence."
-  *(0 = no idea; 4 = specific role/domain and rough timeline)*
+*How well your current skills and effort line up with where the market is going.*
+
+- **A1.** Relevant opportunities rarely come to you unless you actively apply or reach out yourself.
+- **A2.** Your current skills are well aligned with what employers in your market actively demand today.
+- **A3.** You are actively building skills that are likely to become more valuable over the next few years.
+- **A4.** *(reverse-scored)* Your current role helps you perform today, but it is not meaningfully building capabilities that will remain valuable in future roles or career moves.
+- **A5.** The industry you work in is likely to create meaningful long-term growth and opportunity over the next decade.
 
 ## R — Risk Exposure
 
-*(higher answer = better insulated, matching the favorable-direction scoring)*
+*How exposed you'd be if your current role or income were disrupted.*
 
-- **R1. Industry stability.** "My industry's demand for people like me will be stable or
-  growing over the next 5 years."
-  *(0 = clearly shrinking; 4 = clearly growing)*
-- **R2. Automation insulation.** "The core of my job would be hard to automate or
-  commoditize with current technology trends."
-  *(0 = largely automatable today; 4 = judgment/relationship-heavy, hard to automate)*
-- **R3. Skill currency.** "I have meaningfully updated or extended my core professional
-  skills within the last 2 years."
-  *(0 = skills last refreshed 5+ years ago; 4 = continuously refreshed, within 12 months)*
-- **R4. Employer concentration.** "If my current employer disappeared tomorrow, my
-  skills, reputation, and income prospects would transfer intact."
-  *(0 = my value is tied to this one employer's systems and people; 4 = fully portable)*
-- **R5. Shock absorption.** "I have the financial and geographic flexibility to absorb a
-  6-month career disruption."
-  *(0 = none; 4 = comfortable runway and mobility)*
+- **R1.** If you had to leave your current role, you could realistically secure a comparable or better opportunity within the next six months.
+- **R2.** The core work you do is unlikely to be significantly reduced, replaced, or devalued by automation or AI in the near future.
+- **R3.** *(reverse-scored)* A job loss, career break, or transition would put you under immediate financial pressure.
+- **R4.** Your monthly expenses and financial responsibilities do not force you to stay in your current role. If needed, you could leave and take a temporary pay cut or transition role without significant financial strain.
+- **R5.** *(reverse-scored)* Your career choices are heavily restricted by location, family responsibilities, health, or other personal constraints.
 
 ## T — Trajectory
 
-- **T1. Scope growth.** "Over the last 3 years my responsibilities, scope, or level have
-  grown materially."
-  *(0 = identical or reduced scope; 4 = step-change growth, e.g. promotion with expanded remit)*
-- **T2. Learning velocity.** "In the last 12 months I acquired a new skill, credential,
-  or body of expertise."
-  *(0 = nothing new; 4 = multiple substantial additions)*
-- **T3. Optionality signals.** "I receive credible external interest — recruiter
-  outreach for relevant roles, interview invitations, or offers."
-  *(0 = none in the last 2 years; 4 = regular, relevant, senior-appropriate interest)*
-- **T4. Momentum.** "My career options feel like they are expanding rather than
-  narrowing."
-  *(0 = clearly narrowing; 4 = clearly expanding)*
-- **T5. Next-step visibility.** "I can name a realistic next role and roughly how I
-  would get there."
-  *(0 = no visible next step; 4 = named role, known path, rough timeline)*
+*Whether your scope, visibility, and momentum are expanding or stalling.*
+
+- **T1.** Over the past few years, your role has expanded in scope, complexity, or decision-making authority.
+- **T2.** Your work is visible to senior leaders or key decision-makers.
+- **T3.** *(forward-keyed in the source sheet — see flag above)* Real opportunities for promotion, expanded responsibility, or better roles have become infrequent for you.
+- **T4.** *(reverse-scored)* Looking back over the past few years, your career has not moved forward in a clear or meaningful way.
+- **T5.** You are trusted with work or decisions where the stakes, visibility, or business impact are high.
 
 ## H — Human Capital
 
-- **H1. Network strength.** "I can name several senior people outside my current
-  employer who would take my call and advocate for me."
-  *(0 = none; 4 = five or more across multiple organizations)*
-- **H2. Brand & visibility.** "My professional work is visible beyond my employer —
-  an active LinkedIn presence, portfolio, talks, publications, or community standing."
-  *(0 = invisible externally; 4 = recognized name in my niche)*
-- **H3. Transferable breadth.** "My skill set would be valued across multiple roles or
-  industries, not just my current one."
-  *(0 = single-role, single-industry; 4 = demonstrably cross-industry)*
-- **H4. Credentials.** "My degrees, certifications, or formal credentials signal well
-  for the roles I want next."
-  *(0 = missing an expected credential; 4 = fully credentialed for the target)*
-- **H5. Mentorship & sponsorship.** "I have access to mentors or sponsors who actively
-  help me navigate career decisions."
-  *(0 = no one; 4 = active mentor(s) and at least one sponsor)*
+*The strength of your expertise, network, and visible proof of your value.*
+
+- **H1.** Your expertise is strong enough to help you command above-average compensation for someone with similar experience in your field.
+- **H2.** *(forward-keyed in the source sheet — see flag above)* Your LinkedIn, resume, or professional profile does not clearly communicate the skills, strengths, and achievements that distinguish you.
+- **H3.** You have relationships with people who could realistically help you access new roles, clients, or career opportunities.
+- **H4.** *(reverse-scored)* It would be difficult for others to quickly verify your achievements through credible evidence such as recommendations, endorsements, strong work proof, or visible accomplishments.
+- **H5.** The work you do depends on judgment, expertise, or problem-solving that would be difficult to replace with automation or AI.
 
 ## Administration notes
 
-- Estimated completion time: ~5 minutes, consistent with the "5-Minute Assessment"
-  promise on the site's home page.
-- The questionnaire is delivered together with the structured profile fields
-  (`docs/03-profile-schema.md`); for this capstone both are filled into a JSON file per
-  test profile rather than a web UI.
-- Self-report bias is acknowledged: R1/R2 answers are cross-checked against the
-  knowledge-base outlook data during human review (Layer 5), and the report template
-  requires the consultant to flag material disagreements.
+- Estimated completion time: ~5–7 minutes, unchanged from the original questionnaire's
+  timing (same item count, same intake wizard).
+- Item weights (`context/scoring-config.json`) were **kept at their original values**,
+  applied positionally to the new items (e.g. the item in each dimension's #1 slot still
+  carries that dimension's highest weight). These weights were tuned for the *old*
+  question wording and have not been re-validated against the new items' content — they
+  are a reasonable starting default, not a professor-approved calibration. The new
+  admin dashboard (`/admin`, see `docs/09`) exists specifically so these can be retuned
+  without a code change once there's a view on which of the new items should carry more
+  or less weight.
+- Self-report bias is unmitigated in-product, same limitation as the original
+  questionnaire (`docs/06-llm-report-generation.md`'s human-review layer is the only
+  check).
